@@ -28,28 +28,28 @@ jobs:
       semver: ${{ steps.setoutputs.outputs.semver }}
       
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       with:
         fetch-depth: 0
     
     - name: Setup GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.7
+      uses: gittools/actions/gitversion/setup@62f943a7b7e1981bb87a8314f304524657551786 # v0.9.7
       with:
         versionSpec: '5.x'
     
     - name: Setup pnpm
-      uses: pnpm/action-setup@v2.2.2
+      uses: pnpm/action-setup@10693b3829bf86eb2572aef5f3571dcf5ca9287d # v2.2.2
       with:
         version: 7
       
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
       with:
         node-version: ${{ matrix.node-version }}
         
     - name: Determine Version
       id:   gitversion
-      uses: gittools/actions/gitversion/execute@v0.9.7
+      uses: gittools/actions/gitversion/execute@62f943a7b7e1981bb87a8314f304524657551786 # v0.9.7
       
     - name: Set outputs
       id: setoutputs
@@ -66,7 +66,7 @@ jobs:
         gulp package-solution --ship
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
       with:
         name: pnp-modern-search-parts-${{ steps.gitversion.outputs.semVer }}
         path: ${{ github.workspace }}/**/*.sppkg
@@ -78,16 +78,16 @@ jobs:
     needs: build
     steps:
       
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
         with:
           fetch-depth: 0
       
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: pnp-modern-search-parts-${{ needs.build.outputs.semver }}
     
       - name: Create GitHub release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
           name: PnP Modern Search - ${{ needs.build.outputs.semVer }}
           artifacts: ${{ github.workspace }}/**/*.sppkg
@@ -101,7 +101,7 @@ jobs:
           commit: ${{ github.ref_name }}
           
       - name: Setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@e9aba2c848f5ebd159c070c61ea2c4e2b122355e # v2.3.4
         with:
           python-version: 3.x
           
